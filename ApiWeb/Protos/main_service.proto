@@ -1,0 +1,28 @@
+syntax = "proto3";
+import "google/protobuf/timestamp.proto";
+
+option csharp_namespace = "ApiWeb.Protos";
+
+package main;
+
+service MainService {
+	rpc WeathetForecast(EmptyRequest) returns (ForecastResult);
+	rpc WeathetForecastServerStream(EmptyRequest) returns (stream ForecastResult);
+	rpc WeathetForecastClientStream(stream EmptyRequest) returns (ForecastResult);
+	rpc WeathetForecastClientServerStream(stream EmptyRequest) returns (stream Forecast);
+}
+
+message EmptyRequest {
+
+}
+
+message Forecast {
+	google.protobuf.Timestamp date = 1;
+	int32 temperature_c = 2;
+	int32 temperature_f = 3;
+	string summary = 4;
+}
+
+message ForecastResult {
+	repeated Forecast forecast = 1;
+}
